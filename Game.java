@@ -34,23 +34,35 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room entrada, analiticas, salaDeEspera, informacion, urgencias, cafeteria, pediatria, maternidad,neurologia,cardiologia;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        entrada = new Room("en la Entrada del hospital");
+        informacion = new Room("en informacion");
+        analiticas = new Room("en la sala de analiticas");
+        salaDeEspera = new Room("en la sala de espera");
+        urgencias = new Room("en la salda de urgecias");
+        cafeteria = new Room("en la cafeteria");
+        pediatria = new Room("en la sala de pediatria");
+        maternidad = new Room("en la sala de maternidad");
+        neurologia = new Room("en la sala de neurologia");
+        cardiologia = new Room("en la sala de cardiologia");
+        
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        entrada.setExits(informacion, urgencias, null, analiticas);
+        informacion.setExits(neurologia, null, entrada, salaDeEspera);
+        urgencias.setExits(cafeteria, null, null, entrada);
+        cafeteria.setExits(null, null, urgencias, null);
+        analiticas.setExits(salaDeEspera, entrada, null, null);
+        salaDeEspera.setExits(pediatria, informacion, analiticas, null);
+        pediatria.setExits(maternidad, null, salaDeEspera, null);
+        maternidad.setExits(null, cardiologia, pediatria, null);
+        cardiologia.setExits(null, null, null, maternidad);
+        neurologia.setExits(null, null, informacion, null);
+        
 
-        currentRoom = outside;  // start game outside
+        currentRoom = entrada;  // start game outside
     }
 
     /**
@@ -81,7 +93,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
+        System.out.println("Tu estás " + currentRoom.getDescription());
         System.out.print("Exits: ");
         if(currentRoom.northExit != null) {
             System.out.print("north ");
@@ -176,7 +188,7 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
+            System.out.println("Tu estás " + currentRoom.getDescription());
             System.out.print("Exits: ");
             if(currentRoom.northExit != null) {
                 System.out.print("north ");
