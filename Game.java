@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-        
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -35,9 +35,9 @@ public class Game
     private void createRooms()
     {
         Room entrada, analiticas, salaDeEspera, informacion, urgencias, cafeteria, pediatria, maternidad,neurologia,cardiologia;
-      
+
         // create the rooms
-        entrada = new Room("en la Entrada del hospital");
+        entrada = new Room("en la entrada del hospital");
         informacion = new Room("en informacion");
         analiticas = new Room("en la sala de analiticas");
         salaDeEspera = new Room("en la sala de espera");
@@ -47,8 +47,7 @@ public class Game
         maternidad = new Room("en la sala de maternidad");
         neurologia = new Room("en la sala de neurologia");
         cardiologia = new Room("en la sala de cardiologia");
-        
-        
+
         // initialise room exits
         entrada.setExits(informacion, urgencias, null, analiticas);
         informacion.setExits(neurologia, null, entrada, salaDeEspera);
@@ -60,7 +59,6 @@ public class Game
         maternidad.setExits(null, cardiologia, pediatria, null);
         cardiologia.setExits(null, null, null, maternidad);
         neurologia.setExits(null, null, informacion, null);
-        
 
         currentRoom = entrada;  // start game outside
     }
@@ -74,7 +72,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -93,21 +91,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
-        System.out.println("Tu estás " + currentRoom.getDescription());
-        System.out.print("Exits: ");
-        if(currentRoom.northExit != null) {
-            System.out.print("north ");
-        }
-        if(currentRoom.eastExit != null) {
-            System.out.print("east ");
-        }
-        if(currentRoom.southExit != null) {
-            System.out.print("south ");
-        }
-        if(currentRoom.westExit != null) {
-            System.out.print("west ");
-        }
-        System.out.println();
+        printLocationInfo();
     }
 
     /**
@@ -188,21 +172,7 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("Tu estás " + currentRoom.getDescription());
-            System.out.print("Exits: ");
-            if(currentRoom.northExit != null) {
-                System.out.print("north ");
-            }
-            if(currentRoom.eastExit != null) {
-                System.out.print("east ");
-            }
-            if(currentRoom.southExit != null) {
-                System.out.print("south ");
-            }
-            if(currentRoom.westExit != null) {
-                System.out.print("west ");
-            }
-            System.out.println();
+            printLocationInfo();
         }
     }
 
@@ -221,4 +191,23 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
+
+    private void printLocationInfo(){
+        System.out.println("Tu estás " + currentRoom.getDescription());
+        System.out.print("Puedes ir hacia el: ");
+        if(currentRoom.northExit != null) {
+            System.out.print("north ");
+        }
+        if(currentRoom.eastExit != null) {
+            System.out.print("east ");
+        }
+        if(currentRoom.southExit != null) {
+            System.out.print("south ");
+        }
+        if(currentRoom.westExit != null) {
+            System.out.print("west ");
+        }
+        System.out.println();
+    }
 }
+
