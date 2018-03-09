@@ -49,16 +49,16 @@ public class Game
         cardiologia = new Room("en la sala de cardiologia");
 
         // initialise room exits
-        entrada.setExits(informacion, urgencias, null, analiticas);
-        informacion.setExits(neurologia, null, entrada, salaDeEspera);
-        urgencias.setExits(cafeteria, null, null, entrada);
-        cafeteria.setExits(null, null, urgencias, null);
-        analiticas.setExits(salaDeEspera, entrada, null, null);
-        salaDeEspera.setExits(pediatria, informacion, analiticas, null);
-        pediatria.setExits(maternidad, null, salaDeEspera, null);
-        maternidad.setExits(null, cardiologia, pediatria, null);
-        cardiologia.setExits(null, null, null, maternidad);
-        neurologia.setExits(null, null, informacion, null);
+        entrada.setExits(informacion, urgencias, null, analiticas, null);
+        informacion.setExits(neurologia, null, entrada, salaDeEspera, null);
+        urgencias.setExits(cafeteria, null, null, entrada, null);
+        cafeteria.setExits(null, null, urgencias, null, null);
+        analiticas.setExits(salaDeEspera, entrada, null, null, null);
+        salaDeEspera.setExits(pediatria, informacion, analiticas, null, null);
+        pediatria.setExits(maternidad, null, salaDeEspera, null, null);
+        maternidad.setExits(null, cardiologia, pediatria, null, null);
+        cardiologia.setExits(null, null, null, maternidad, null);
+        neurologia.setExits(null, null, informacion, null, urgencias);
 
         currentRoom = entrada;  // start game outside
     }
@@ -166,6 +166,9 @@ public class Game
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
+        if(direction.equals("southEast")) {
+            nextRoom = currentRoom.southEastExit;
+        }
 
         if (nextRoom == null) {
             System.out.println("There is no door!");
@@ -192,6 +195,9 @@ public class Game
         }
     }
 
+    /**
+     * Metodo que nos permitira saber la localizacion del personaje. 
+     */
     private void printLocationInfo(){
         System.out.println("Tu estás " + currentRoom.getDescription());
         System.out.print("Puedes ir hacia el: ");
@@ -206,6 +212,9 @@ public class Game
         }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
+        }
+        if(currentRoom.southEastExit != null) {
+            System.out.print("southEast ");
         }
         System.out.println();
     }
