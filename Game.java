@@ -49,16 +49,16 @@ public class Game
         cardiologia = new Room("en la sala de cardiologia");
 
         // initialise room exits
-        entrada.setExits(informacion, urgencias, null, analiticas, null);
-        informacion.setExits(neurologia, null, entrada, salaDeEspera, null);
-        urgencias.setExits(cafeteria, null, null, entrada, null);
-        cafeteria.setExits(null, null, urgencias, null, null);
-        analiticas.setExits(salaDeEspera, entrada, null, null, null);
-        salaDeEspera.setExits(pediatria, informacion, analiticas, null, null);
-        pediatria.setExits(maternidad, null, salaDeEspera, null, null);
-        maternidad.setExits(null, cardiologia, pediatria, null, null);
-        cardiologia.setExits(null, null, null, maternidad, null);
-        neurologia.setExits(null, null, informacion, null, urgencias);
+        entrada.setExits(informacion, urgencias, null, analiticas, null, null);
+        informacion.setExits(neurologia, null, entrada, salaDeEspera, null, null);
+        urgencias.setExits(cafeteria, null, null, entrada, null, null);
+        cafeteria.setExits(null, null, urgencias, null, null, null);
+        analiticas.setExits(salaDeEspera, entrada, null, null, null, null);
+        salaDeEspera.setExits(pediatria, informacion, analiticas, null, null, neurologia);
+        pediatria.setExits(maternidad, null, salaDeEspera, null, null, null);
+        maternidad.setExits(null, cardiologia, pediatria, null, null, null);
+        cardiologia.setExits(null, null, null, maternidad, null, null);
+        neurologia.setExits(null, null, informacion, null, urgencias, null);
 
         currentRoom = entrada;  // start game outside
     }
