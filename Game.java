@@ -49,17 +49,38 @@ public class Game
         cardiologia = new Room("en la sala de cardiologia");
 
         // initialise room exits
-        entrada.setExits(informacion, urgencias, null, analiticas, null, null);
-        informacion.setExits(neurologia, null, entrada, salaDeEspera, null, null);
-        urgencias.setExits(cafeteria, null, null, entrada, null, null);
-        cafeteria.setExits(null, null, urgencias, null, null, null);
-        analiticas.setExits(salaDeEspera, entrada, null, null, null, null);
-        salaDeEspera.setExits(pediatria, informacion, analiticas, null, null, neurologia);
-        pediatria.setExits(maternidad, null, salaDeEspera, null, null, null);
-        maternidad.setExits(null, cardiologia, pediatria, null, null, null);
-        cardiologia.setExits(null, null, null, maternidad, null, null);
-        neurologia.setExits(null, null, informacion, null, urgencias, null);
+        entrada.setExits("north",informacion);
+        entrada.setExits("east",urgencias);
+        entrada.setExits("weast",analiticas);
+        
+        informacion.setExits("north",neurologia);
+        informacion.setExits("south",entrada);
+        informacion.setExits("weast",salaDeEspera);
+        
+        urgencias.setExits("north",cafeteria);
+        urgencias.setExits("weast",entrada);
+        
+        cafeteria.setExits("south",urgencias);
+        
+        analiticas.setExits("north",salaDeEspera);
+        analiticas.setExits("east",entrada);
 
+        salaDeEspera.setExits("north",pediatria);
+        salaDeEspera.setExits("east",informacion);
+        salaDeEspera.setExits("south",analiticas);
+        salaDeEspera.setExits("northEast",neurologia);
+        
+        pediatria.setExits("north",maternidad);
+        pediatria.setExits("south",salaDeEspera);
+        
+        maternidad.setExits("east",cardiologia);
+        maternidad.setExits("south",pediatria);
+        
+        cardiologia.setExits("weast",maternidad);
+        
+        neurologia.setExits("south",informacion);
+        neurologia.setExits("southEast",urgencias);
+        
         currentRoom = entrada;  // start game outside
     }
 
