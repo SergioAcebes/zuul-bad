@@ -52,16 +52,16 @@ public class Game
         entrada.setExits("north",informacion);
         entrada.setExits("east",urgencias);
         entrada.setExits("weast",analiticas);
-        
+
         informacion.setExits("north",neurologia);
         informacion.setExits("south",entrada);
         informacion.setExits("weast",salaDeEspera);
-        
+
         urgencias.setExits("north",cafeteria);
         urgencias.setExits("weast",entrada);
-        
+
         cafeteria.setExits("south",urgencias);
-        
+
         analiticas.setExits("north",salaDeEspera);
         analiticas.setExits("east",entrada);
 
@@ -69,18 +69,18 @@ public class Game
         salaDeEspera.setExits("east",informacion);
         salaDeEspera.setExits("south",analiticas);
         salaDeEspera.setExits("northEast",neurologia);
-        
+
         pediatria.setExits("north",maternidad);
         pediatria.setExits("south",salaDeEspera);
-        
+
         maternidad.setExits("east",cardiologia);
         maternidad.setExits("south",pediatria);
-        
+
         cardiologia.setExits("weast",maternidad);
-        
+
         neurologia.setExits("south",informacion);
         neurologia.setExits("southEast",urgencias);
-        
+
         currentRoom = entrada;  // start game outside
     }
 
@@ -135,6 +135,9 @@ public class Game
         }
         else if (commandWord.equals("go")) {
             goRoom(command);
+        }
+        else if (commandWord.equals("look")) {
+            look();
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
@@ -209,5 +212,12 @@ public class Game
         System.out.println();
     }
 
+    /**
+     * Metodo que nos permitira ver la informacion de la habitacion.
+     */
+    private void look() 
+    {
+        System.out.println(currentRoom.getLongDescription());
+    }
 }
 
