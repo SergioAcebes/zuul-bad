@@ -205,9 +205,7 @@ public class Game
      * Metodo que nos permitira saber la localizacion del personaje. 
      */
     private void printLocationInfo(){
-        System.out.println("Tu estás " + currentRoom.getDescription());
-        System.out.print(currentRoom.getExitString());
-        
+        System.out.println(currentRoom.getLongDescription());
         System.out.println();
     }
 
