@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Set;
+import java.util.ArrayList;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -18,29 +19,47 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
-    private Item item;
+    private ArrayList<Item> objects;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, Item item) 
+    public Room(String description) 
     {
         this.description = description;
         exits = new HashMap<>();
-        this.item = item;
+        objects = new ArrayList<>();
     }
 
     public void setExits(String direction, Room nextRoom){
         exits.put(direction, nextRoom);
     }
 
+    public void addItem(String itemName, int itemWeight){
+        Item itemNuevo= new Item(itemName, itemWeight);
+        objects.add(itemNuevo);;
+    }
+
+    public String getAllItems(){
+        String listaDeItems = "";
+        if(objects.size() <= 0){
+            listaDeItems="No hay ningun objeto en esta habitacion";
+        }
+        else{
+            for(Item objetoDeLaLista : objects){
+                listaDeItems += objetoDeLaLista.getItemInfo() + ".\n";
+            }
+        }
+        return listaDeItems;
+    }
+    
+
     /**
      * @return The description of the room.
      */
-    public String getDescription()
-    {
+    public String getDescription(){
         return description;
     }
 
@@ -56,7 +75,8 @@ public class Room
      */
     public String getExitString(){
         Set<String> direcciones = exits.keySet();
-        String descripcion = "Exits: ";
+        String descripcion = "Salidas: ";
+        
         for(String direction : direcciones){
             descripcion += direction + " ";
         }
@@ -70,7 +90,7 @@ public class Room
      * @return A description of the room, including exits.
      */
     public String getLongDescription(){
-        return "Tu estas " + description + ".\n" + getExitString() + ".\n" + item.getItemInfo() ;
+        return "Tu estas " + description + ".\n" + getExitString() + ".\n" + getAllItems() + "\n" + "¿Hacia donde quieres ir?" ;
     }
 
 }

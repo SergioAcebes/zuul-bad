@@ -44,7 +44,14 @@ public class Item
      */
     public String getItemInfo()
     {
-        return "Hay un/a " + itemName + " de " + itemWeight + " kilos.";
+        String hayItem = "Hay un/a ";
+        if(itemName != null){
+            hayItem += itemName + " de " + itemWeight + " kilos";
+        }
+        else {
+            hayItem = "";
+        }
+        return hayItem;
     }
     
 }

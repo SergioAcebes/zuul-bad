@@ -37,16 +37,16 @@ public class Game
         Room entrada, analiticas, salaDeEspera, informacion, urgencias, cafeteria, pediatria, maternidad,neurologia,cardiologia;
 
         // create the rooms
-        entrada = new Room("en la entrada del hospital", new Item("maquina 24h",400));
-        informacion = new Room("en informacion", new Item(null,0));
-        analiticas = new Room("en la sala de analiticas", new Item(null,0));
-        salaDeEspera = new Room("en la sala de espera", new Item(null,0));
-        urgencias = new Room("en la salda de urgecias", new Item(null,0));
-        cafeteria = new Room("en la cafeteria", new Item(null,0));
-        pediatria = new Room("en la sala de pediatria", new Item(null,0));
-        maternidad = new Room("en la sala de maternidad", new Item(null,0));
-        neurologia = new Room("en la sala de neurologia", new Item(null,0));
-        cardiologia = new Room("en la sala de cardiologia", new Item(null,0));
+        entrada = new Room("en la entrada del hospital");
+        informacion = new Room("en informacion");
+        analiticas = new Room("en la sala de analiticas");
+        salaDeEspera = new Room("en la sala de espera");
+        urgencias = new Room("en la salda de urgecias");
+        cafeteria = new Room("en la cafeteria");
+        pediatria = new Room("en la sala de pediatria");
+        maternidad = new Room("en la sala de maternidad");
+        neurologia = new Room("en la sala de neurologia");
+        cardiologia = new Room("en la sala de cardiologia");
 
         // initialise room exits
         entrada.setExits("north",informacion);
@@ -80,6 +80,11 @@ public class Game
 
         neurologia.setExits("south",informacion);
         neurologia.setExits("southEast",urgencias);
+        
+        //Añadir objetos.
+        entrada.addItem("maquina 24h",400);
+        entrada.addItem("mesa",20);
+         entrada.addItem("silla",7);
 
         currentRoom = entrada;  // start game outside
     }
@@ -99,7 +104,7 @@ public class Game
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Gracias por jugar, HASTA LA VISTA!");
     }
 
     /**
@@ -108,9 +113,10 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Bienvenido al hospital,veo que andas apurado con la hora de tu cita...");
+        System.out.println("Las salas del hospital comunican a base de pasillos que en ocasiones son un lio.");
+        System.out.println("ten cuidado no te pierdas!!");
+        System.out.println("Escribe 'help' si necesitas ayuda.");
         System.out.println();
         printLocationInfo();
     }
@@ -125,7 +131,7 @@ public class Game
         boolean wantToQuit = false;
 
         if(command.isUnknown()) {
-            System.out.println("I don't know what you mean...");
+            System.out.println("No se que quieres decir...");
             return false;
         }
 
@@ -158,10 +164,10 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the hospital.");
+        System.out.println("Llegarás tarde a tu cita de consulta. DATE PRISA!!");
+        System.out.println("Encuentra la sala de cardiologia lo antes posible");
         System.out.println();
-        System.out.println("Your command words are:");
+        System.out.println("Tus comandos disponibles son: ");
         System.out.println(parser.showCommands());
     }
 
@@ -183,7 +189,7 @@ public class Game
         Room nextRoom = currentRoom.getExit(direction);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("Hacia ese lado no hay pasillo!");
         }
         else {
             currentRoom = nextRoom;
