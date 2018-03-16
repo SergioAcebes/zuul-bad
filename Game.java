@@ -19,7 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-
+    private Room salaAnterior;
     /**
      * Create the game and initialise its internal map.
      */
@@ -27,6 +27,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        salaAnterior = null;
     }
 
     /**
@@ -80,11 +81,11 @@ public class Game
 
         neurologia.setExits("south",informacion);
         neurologia.setExits("southEast",urgencias);
-        
+
         //Añadir objetos.
         entrada.addItem("maquina 24h",400);
         entrada.addItem("mesa",20);
-         entrada.addItem("silla",7);
+        entrada.addItem("silla",7);
 
         currentRoom = entrada;  // start game outside
     }
@@ -151,6 +152,9 @@ public class Game
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
+        else if (commandWord.equals("back")) {
+            back();
+        }
 
         return wantToQuit;
     }
@@ -192,6 +196,7 @@ public class Game
             System.out.println("Hacia ese lado no hay pasillo!");
         }
         else {
+            salaAnterior = currentRoom;
             currentRoom = nextRoom;
             printLocationInfo();
         }
@@ -229,13 +234,25 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
     }
     
+
     /**
      * Metodo que nos permitira comer.
      */
     private void eat() 
     {
-        System.out.println("Acabas de comer ya no tienes hambre");
+        System.out.println("Acabas de comer ya no tienes hambre.");
     }
-    
+
+    /**
+     * Metodo que nos permitira volver a la sala anterior.
+     */
+    private void back() 
+    {
+        if (salaAnterior !=null){
+            currentRoom = salaAnterior;
+            printLocationInfo();
+            salaAnterior = null;
+        }
+    }
 }
 

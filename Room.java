@@ -45,7 +45,7 @@ public class Room
     public String getAllItems(){
         String listaDeItems = "";
         if(objects.size() <= 0){
-            listaDeItems="No hay ningun objeto en esta habitacion";
+            listaDeItems="No hay ningun objeto en esta habitacion.";
         }
         else{
             for(Item objetoDeLaLista : objects){
