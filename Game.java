@@ -37,16 +37,16 @@ public class Game
         Room entrada, analiticas, salaDeEspera, informacion, urgencias, cafeteria, pediatria, maternidad,neurologia,cardiologia;
 
         // create the rooms
-        entrada = new Room("en la entrada del hospital");
-        informacion = new Room("en informacion");
-        analiticas = new Room("en la sala de analiticas");
-        salaDeEspera = new Room("en la sala de espera");
-        urgencias = new Room("en la salda de urgecias");
-        cafeteria = new Room("en la cafeteria");
-        pediatria = new Room("en la sala de pediatria");
-        maternidad = new Room("en la sala de maternidad");
-        neurologia = new Room("en la sala de neurologia");
-        cardiologia = new Room("en la sala de cardiologia");
+        entrada = new Room("en la entrada del hospital", new Item("maquina 24h",400));
+        informacion = new Room("en informacion", new Item(null,0));
+        analiticas = new Room("en la sala de analiticas", new Item(null,0));
+        salaDeEspera = new Room("en la sala de espera", new Item(null,0));
+        urgencias = new Room("en la salda de urgecias", new Item(null,0));
+        cafeteria = new Room("en la cafeteria", new Item(null,0));
+        pediatria = new Room("en la sala de pediatria", new Item(null,0));
+        maternidad = new Room("en la sala de maternidad", new Item(null,0));
+        neurologia = new Room("en la sala de neurologia", new Item(null,0));
+        cardiologia = new Room("en la sala de cardiologia", new Item(null,0));
 
         // initialise room exits
         entrada.setExits("north",informacion);
