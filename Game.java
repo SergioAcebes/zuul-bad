@@ -1,4 +1,5 @@
 import java.util.Stack;
+import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -21,7 +22,9 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Stack<Room> retroceder;
-
+    private static final int CARGAMAXIMA = 300;
+    private int pesoActual;
+    private ArrayList<Item> items;
     /**
      * Create the game and initialise its internal map.
      */
@@ -30,6 +33,8 @@ public class Game
         createRooms();
         parser = new Parser();
         retroceder = new Stack<>();
+        items = new ArrayList<>();
+        pesoActual = 0; 
     }
 
     /**
@@ -38,7 +43,7 @@ public class Game
     private void createRooms()
     {
         Room entrada, analiticas, salaDeEspera, informacion, urgencias, cafeteria, pediatria, maternidad,neurologia,cardiologia;
-
+        Item maquina,mesa,silla,boligrafo,corazon,bisturi,bebe,coche,cocacola;
         // create the rooms
         entrada = new Room("en la entrada del hospital");
         informacion = new Room("en informacion");
@@ -83,11 +88,32 @@ public class Game
 
         neurologia.setExits("south",informacion);
         neurologia.setExits("southEast",urgencias);
-
         //Añadir objetos.
-        entrada.addItem("maquina 24h",400);
-        entrada.addItem("mesa",20);
-        entrada.addItem("silla",7);
+        maquina = new Item("maquina 24h",400,true);
+        mesa = new Item("mesa",20,true);
+        silla = new Item("silla",7,true);
+        boligrafo = new Item("boligrafo",1,true);
+        corazon = new Item("corazon",2,true);
+        bisturi = new Item("bisturi",10,true);
+        cocacola = new Item("cocacola",5,true);
+        bebe = new Item("bebe",15,true);
+        coche = new Item("coche de jugete",50,true);
+        
+        
+        entrada.addItem(maquina);
+        entrada.addItem(mesa);
+        entrada.addItem(silla);
+        
+        informacion.addItem(boligrafo);
+        
+        cardiologia.addItem(corazon);
+        cardiologia.addItem(bisturi);
+        
+        cafeteria.addItem(cocacola);
+        
+        maternidad.addItem(bebe);
+        
+        pediatria.addItem(coche);
 
         currentRoom = entrada;  // start game outside
     }
@@ -157,6 +183,16 @@ public class Game
         else if (commandWord.equals("back")) {
             back();
         }
+        else if (commandWord.equals("take")) {
+            take(command.getSecondWord());
+        }
+        else if (commandWord.equals("drop")) {
+            drop(command.getSecondWord());
+        }
+        else if (commandWord.equals("items")) {
+            items();
+        }
+        
 
         return wantToQuit;
     }
@@ -252,6 +288,85 @@ public class Game
         if (!retroceder.empty()){
             currentRoom = retroceder.pop();
             printLocationInfo();
+        }
+    }
+    
+    /**
+     * Metodo que nos permitira coger un objeto de una sala y almacenarlo.
+     */
+      private void addItemMochila(Item item)
+    {
+        items.add(item);
+    } 
+    
+    private void take(String nombre) 
+    {   
+        ArrayList<Item> itemsRoom = currentRoom.getArrayListItems();
+        Item item = null;
+       for(int i=0;i < itemsRoom.size(); i++)
+        {
+            if(itemsRoom.get(i).getItemName().equals(nombre))
+            {
+                item= itemsRoom.get(i);
+            }
+        }
+        if(item.getHayEspacio() && item != null){
+            int pesoTotal = pesoActual + item.getItemWeight();
+            boolean buscando = true;
+            int contador = 0;            
+            if(pesoTotal <= CARGAMAXIMA){
+                items.add(item);
+                pesoActual += item.getItemWeight();
+                itemsRoom.remove(item);
+                System.out.println("Añadido a la mochila un/una" + nombre);
+            }
+            else{
+                System.out.println("No puedes carga tanto la mochila");
+            }            
+       }
+        else{
+            System.out.println("No puedes coger este objeto,pesa demasiado");
+       }
+    }
+    
+     private void drop(String nombre)
+    {                 
+        if(items.size() > 0){
+            boolean sePuedeCoger = true;
+            int contador = 0;
+            Item item = null;
+            while(sePuedeCoger)
+            {
+                if(items.get(contador).getItemName().equals(nombre)){
+                    item = items.get(contador);
+                    currentRoom.addItem(item);
+                    sePuedeCoger = false;
+                    pesoActual -= item.getItemWeight();
+                    items.remove(contador);
+                }
+                contador++;
+            }
+            System.out.println("Sacado de la mochila  " + nombre);
+        }
+        else
+       {
+            System.out.println("No tienes ningun objeto");
+       }
+    }   
+    
+    private void items()
+    {   
+        String texto = "Tienes guardado ";
+        if(items.size() > 0){
+            for(Item objeto : items)
+            {
+                texto += objeto.getItemName() + " ";         
+            }
+            texto += "\n"+ "El peso de la mochila es :" + pesoActual + "kilos";
+            System.out.println(texto);
+        }
+        else{
+            System.out.println("No tienes ningun objeto");
         }
     }
 }

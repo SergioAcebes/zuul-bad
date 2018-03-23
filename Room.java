@@ -37,11 +37,15 @@ public class Room
         exits.put(direction, nextRoom);
     }
 
-    public void addItem(String itemName, int itemWeight){
-        Item itemNuevo= new Item(itemName, itemWeight);
-        objects.add(itemNuevo);;
+    public void addItem(Item itemNuevo){
+        objects.add(itemNuevo);
     }
-
+    
+     public void removeItem(int posicion)
+    {
+        objects.remove(posicion);
+    }
+    
     public String getAllItems(){
         String listaDeItems = "";
         if(objects.size() <= 0){
@@ -74,6 +78,7 @@ public class Room
      * @ return A description of the available exits.
      */
     public String getExitString(){
+        
         Set<String> direcciones = exits.keySet();
         String descripcion = "Salidas: ";
         
@@ -93,4 +98,8 @@ public class Room
         return "Tu estas " + description + ".\n" + getExitString() + ".\n" + getAllItems() + "\n" + "¿Hacia donde quieres ir?" ;
     }
 
+      public ArrayList getArrayListItems()
+    {
+        return objects;
+    }
 }

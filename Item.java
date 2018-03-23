@@ -10,14 +10,15 @@ public class Item
     
     private String itemName;
     private int itemWeight;
-
+    private boolean hayEspacio;
     /**
      * Constructor for objects of class item
      */
-    public Item(String nombre,int peso)
+    public Item(String nombre,int peso,boolean hayEspacio)
     {
         itemName = nombre;
         itemWeight = peso;
+        this.hayEspacio = hayEspacio;
     }
 
     /**
@@ -36,6 +37,10 @@ public class Item
     public int getItemWeight()
     {
         return itemWeight;
+    }
+    
+    public boolean getHayEspacio(){
+        return hayEspacio;
     }
     
     /**
